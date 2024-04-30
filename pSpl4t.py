@@ -1,7 +1,7 @@
 import tkinter as tk
 import random
 
-def Initialisation():
+def Initialisation(): #Bastien
     joueurDebut = 1
 
     jetonsDebut = 0
@@ -15,24 +15,22 @@ def Initialisation():
 
     return(joueurDebut,jetonsDebut,TAB)
 
-def Changement_joueur(player): #MOI
+def Changement_joueur(player): #Clément
     if player==1:
         player=2
     else:
         player=1
     return player
 
-def click(event):
+def click(event): #Lyna
     global yodel
     global nCol
     x = event.x
-    yodel.set((x-10)//100)
+    yodel.set((x-10)//100) #la récupération du numéro de colonne était travaillée par Clément et Lyna conjointement
     nCol = yodel.get()
     print(nCol)
-    print("Position X du clic :", x)
-    print("Numéro de Colonne :", nCol)
 
-def dessin_grille():  #MOI
+def dessin_grille(): #Clément
     x=10
     y=10
     for i in range(8):
@@ -42,54 +40,50 @@ def dessin_grille():  #MOI
         trace_ligne_hor(y)
         y=y+100
 
-def trace_ligne_ver(x1):
+def trace_ligne_ver(x1): #Lyna
     y1=10
     y2=610
     grille.create_line((x1,y1),(x1,y2),width=2,fill="black")
 
-def trace_ligne_hor(y1):
+def trace_ligne_hor(y1): #Cordélia
     x1=10
     x2=710
     grille.create_line((x1,y1),(x2,y1),width=2,fill="black")
 
-def Recherche_Colonne(x): #MOI
-    numero_colonne=(x-10)//100
-    return numero_colonne
-
-def check_variable():
+def check_variable(): #Bastien
     if yodel != 0 and yodel < 711:
         print("Donnée récupérée :", yodel)
         return True
     else:
         root.after(100, check_variable)
 
-def Recherche_ligne(nColonne, TabJeu):
+def Recherche_ligne(nColonne, TabJeu): #Lyna
     i = 5 #il s'agit de la ligne le plus en bas dans le tableau
     while i >= 0 and TabJeu[i][nColonne] != 0:
         i -= 1 #On enleve 1 à i pour vérifier la ligne du dessus
     print("ligne recherche", i)
     return i #i correspond au numéro de ligne
 
-def Dessin_jeton(X,Y,Player, set):
+def Dessin_jeton(X,Y,Player, set): #Cordélia
     colorange1=["blue2", "lime green","blue4","light sea green"]
     colorange2=["dark orange", "deep pink","yellow","hot pink"]
-    colonne_du_cercle=X*100+10+50
-    ligne_du_cercle=Y*100+10+50#+50 #fois 100 pour mettre à échelle, puis compter la marge et la diff centre/bout
-    couleur_du_cercle=Player
+    colonne_du_calmar=X*100+10+50
+    ligne_du_calmar=Y*100+10+50 #fois 100 pour mettre à échelle, puis compter la marge et la diff centre/bout
+    couleur_du_calmar=Player
     couleur=0
-    if couleur_du_cercle==1:
+    if couleur_du_calmar==1:
         couleur=colorange1[set]
     else:
         couleur=colorange2[set]
-    y1=ligne_du_cercle
-    x1=colonne_du_cercle-21
-    y2=ligne_du_cercle+15
-    x2=colonne_du_cercle+21
+    y1=ligne_du_calmar
+    x1=colonne_du_calmar-21
+    y2=ligne_du_calmar+15
+    x2=colonne_du_calmar+21
     calmar(x1,y1,x2,y2,couleur)
 
 
 
-def calmar(X1, Y1, X2, Y2, clr):
+def calmar(X1, Y1, X2, Y2, clr): #Bastien
     global d1
     global d2
     global d3
@@ -117,7 +111,7 @@ def calmar(X1, Y1, X2, Y2, clr):
     d10 = grille.create_rectangle(X2-12, Y1+7, X2-17, Y2-2, fill="black", outline="white")
     derjet = [d1,d2,d3,d4,d5,d6,d7,d8,d9,d10]
 
-def Actualiser_Jeu (ligne,colonne,joueur,jeu): #MOI
+def Actualiser_Jeu (ligne,colonne,joueur,jeu): #Clément
     global nbJetons
     nbJetons+=1
     if joueur==1:
@@ -126,7 +120,7 @@ def Actualiser_Jeu (ligne,colonne,joueur,jeu): #MOI
         jeu[ligne][colonne]=2
     return jeu
 
-def Controle_alignement(TAB, Player):
+def Controle_alignement(TAB, Player): #Bastien
     #Cette fonction vérifie l'alignement en appellant trois fonctions vérifiant l'alignement vertical, horizontal et diagonal.
     Vict = False
     Gagnant = 0
@@ -144,7 +138,7 @@ def Controle_alignement(TAB, Player):
     return (Gagnant, Vict)
 
 #Cette fonction prend en paramètre le tableau représentant le jeu, le joueur actuel et les coordonnées du jeton placé
-def controle_alignement_vertical(TAB, Player, x, y):
+def controle_alignement_vertical(TAB, Player, x, y): #Lyna
     nbAlignes = 1  # Initialise le compteur à 1 pour le jeton actuel
     i = x + 1  # Commence à vérifier les jetons en dessous du jeton actuel
 
@@ -156,7 +150,7 @@ def controle_alignement_vertical(TAB, Player, x, y):
     # Si au moins 4 jetons sont alignés verticalement, retourne True, sinon False
     return nbAlignes >= 4
 
-def Controle_alignement_horizontal(TAB, Player, x, y):
+def Controle_alignement_horizontal(TAB, Player, x, y): #Cordélia
     #Pour gagner, un joueur doit aligner aumoins 4 jetons de la même couleur.
     #Cette fonction vérifie s'il y a 3 jetons de la même couleur, sur la même ligne de part et d'autre du jeton qui vient d'être placé.
     #Pour cela, la fonction vérifie la présence de jetons de la même couleur dans un rayon de trois cases autour du jeton qui vient d'être placé.
@@ -180,7 +174,7 @@ def Controle_alignement_horizontal(TAB, Player, x, y):
     else:
         return False
 
-def Controle_alignement_diagonal(TAB,Player,X,Y):
+def Controle_alignement_diagonal(TAB,Player,X,Y): #Bastien
     init_X=X
     init_Y=Y
     BackUp_X=X+1
@@ -211,7 +205,7 @@ def Controle_alignement_diagonal(TAB,Player,X,Y):
         return False
     
 
-def retour(line, column, token, matrix): #MOI
+def retour(line, column, token, matrix): #Clément
     global Joueur
     matrix[line][column] = 0
     for i in range(len(derjet)):
@@ -223,7 +217,7 @@ def retour(line, column, token, matrix): #MOI
 
 
     
-def Affichage_Final(Victoire,Vainqueur,compteur):
+def Affichage_Final(Victoire,Vainqueur,compteur): #Cordélia
     B1=tk.Label(root,text="Le joueur 1 a gagné",font=("Impact", 50),bg="black",fg="white")
     B2=tk.Label(root,text="Le joueur 2 a gagné",font=("Impact", 50),bg="black",fg="white")
     B3=tk.Label(root,text="égalité.",font=("Impact", 50),bg="black",fg="white")
@@ -244,28 +238,28 @@ def Affichage_Final(Victoire,Vainqueur,compteur):
 
 
 
-# Création de la fenêtre principale
+# Création de la fenêtre principale #Bastien
 root = tk.Tk()
 root.title("Puissance 4 (Spl4t ?)")
 root.geometry("1020x720")
 
 
-# Création d'une zone de dessin (grille) pour représenter la grille          MOI
+# Création d'une zone de dessin (grille) pour représenter la grille #Clément
 grille = tk.Canvas(root, width=710, height=610, bg="seashell2")
 grille.place(x=0, y=0)
 grille.pack()
 
-# Création d'une zone d'interface secondaire
-inter = tk.Canvas(root, width = 150, height = 600, bg = "gray")
+# Création d'une zone d'interface secondaire #Lyna
+inter = tk.Canvas(root, width = 150, height = 600 , bg = "magenta")
 inter.place(x=870, y=5)
 inter.create_line((2,2),(2,598),width=2,fill="black")
 inter.create_line((2,2),(148,2),width=2,fill="black")
 inter.create_line((148,2),(148,598),width=2,fill="black")
-inter.create_line((2,598),(148,598),width=2,fill="black")
+inter.create_line((2,598),(148,598),width=2,fill="black")  
 
 undo = tk.Button(inter, text = "Undo", width = 4, height = 1, command = lambda : retour(Ligne, nCol, derjet, JEU),
                  font = ("Arial", 25))
-undo.place(x=2, y=400)
+undo.place(x=40, y=500)
 
 
 
@@ -278,18 +272,15 @@ couleurs = random.randint(0,3)
 # Dessiner une grille simple pour l'exemple
 dessin_grille()
 
-# Associer la fonction click à un clic de souris sur la zone de dessin
+# Associer la fonction click à un clic de souris sur la zone de dessin #Cordélia
 yodel = tk.IntVar()
 nCol = 0
 while victoire == False and nbJetons < 42:
     grille.bind("<Button-1>", click)
     root.wait_variable(yodel)
     Ligne = Recherche_ligne(nCol, JEU)
-    print(Ligne)
     Dessin_jeton(nCol, Ligne, Joueur, couleurs)
-    print(derjet)
     Actualiser_Jeu(Ligne, nCol, Joueur, JEU)
-    print(JEU)
     Vainqueur, victoire = Controle_alignement(JEU, Joueur)
     Joueur = Changement_joueur(Joueur)
 Affichage_Final(victoire, Vainqueur, nbJetons)
